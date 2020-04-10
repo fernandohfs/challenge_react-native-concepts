@@ -37,33 +37,37 @@ export default function App() {
     <>
       <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
       <SafeAreaView style={styles.container}>
-        {repositories.map(({ id, title, techs, likes }) => (
-          <View key={id} style={styles.repositoryContainer}>
-            <Text style={styles.repository}>{title}</Text>
+        <FlatList
+          data={repositories}
+          keyExtractor={({ id }) => id}
+          renderItem={({ item: { id, title, techs, likes } }) => (
+            <View style={styles.repositoryContainer}>
+              <Text style={styles.repository}>{title}</Text>
 
-            <View style={styles.techsContainer}>
-              {techs.map((tech) => (
-                <Text key={tech} style={styles.tech}>
-                  {tech}
+              <View style={styles.techsContainer}>
+                {techs.map((tech) => (
+                  <Text key={tech} style={styles.tech}>
+                    {tech}
+                  </Text>
+                ))}
+              </View>
+
+              <View style={styles.likesContainer}>
+                <Text style={styles.likeText} testID={`repository-likes-${id}`}>
+                  {likes} curtidas
                 </Text>
-              ))}
-            </View>
+              </View>
 
-            <View style={styles.likesContainer}>
-              <Text style={styles.likeText} testID={`repository-likes-${id}`}>
-                {likes} curtidas
-              </Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handleLikeRepository(id)}
+                testID={`like-button-${id}`}
+              >
+                <Text style={styles.buttonText}>Curtir</Text>
+              </TouchableOpacity>
             </View>
-
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => handleLikeRepository(id)}
-              testID={`like-button-${id}`}
-            >
-              <Text style={styles.buttonText}>Curtir</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
+          )}
+        />
       </SafeAreaView>
     </>
   );
