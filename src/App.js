@@ -7,7 +7,7 @@ import {
   Text,
   StatusBar,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 
 import api from "./services/api";
@@ -23,13 +23,9 @@ export default function App() {
     try {
       const { data } = await api.post(`/repositories/${id}/like`);
 
-      const newRepositories = repositories.map((repository) => {
-        if (repository.id === id) {
-          repository.likes = data.likes;
-        }
-
-        return repository;
-      });
+      const newRepositories = repositories.map((repository) =>
+        repository.id === id ? data : repository
+      );
 
       setRepositories(newRepositories);
     } catch (error) {
@@ -76,21 +72,21 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#7159c1",
+    backgroundColor: "#7159c1"
   },
   repositoryContainer: {
     marginBottom: 15,
     marginHorizontal: 15,
     backgroundColor: "#fff",
-    padding: 20,
+    padding: 20
   },
   repository: {
     fontSize: 32,
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   techsContainer: {
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: 10
   },
   tech: {
     fontSize: 12,
@@ -99,20 +95,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#04d361",
     paddingHorizontal: 10,
     paddingVertical: 5,
-    color: "#fff",
+    color: "#fff"
   },
   likesContainer: {
     marginTop: 15,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   },
   likeText: {
     fontSize: 14,
     fontWeight: "bold",
-    marginRight: 10,
+    marginRight: 10
   },
   button: {
-    marginTop: 10,
+    marginTop: 10
   },
   buttonText: {
     fontSize: 14,
@@ -120,6 +116,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     color: "#fff",
     backgroundColor: "#7159c1",
-    padding: 15,
-  },
+    padding: 15
+  }
 });
